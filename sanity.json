@@ -1,0 +1,14 @@
+{
+  "api": {
+    "permissions": [
+      {
+        "role": "editor",
+        "grants": [
+          { "permission": "create", "on": "document" },
+          { "permission": "update", "on": "document" },
+          { "permission": "delete", "on": "document" }
+        ]
+      }
+    ]
+  }
+}
