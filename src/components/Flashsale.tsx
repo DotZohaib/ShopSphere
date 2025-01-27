@@ -288,7 +288,7 @@ const FlashSales = () => {
             initial={{ scale: 0.9 }}
             animate={{ scale: 1 }}
             exit={{ scale: 0.9 }}
-            className="bg-white rounded-lg max-w-4xl w-full mx-4 p-6 max-h-[90vh] overflow-y-auto"
+            className="bg-white rounded-lg max-w-4xl w-full mx-4 p-6 max-h-[80vh] overflow-y-auto"
             onClick={(e) => e.stopPropagation()}
           >
             <div className="grid md:grid-cols-2 gap-6">
