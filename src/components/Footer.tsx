@@ -1,20 +1,73 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
+
 "use client"
+
 import React, { useState } from 'react';
-import { Mail, Phone, MapPin, Facebook, Twitter, Instagram, Youtube, ArrowRight, Heart, Star, Clock, Shield } from 'lucide-react';
+import { Mail, Phone, MapPin, Facebook, Twitter, Instagram, Youtube, ArrowRight, Heart, Star, Clock, Shield, LucideIcon } from 'lucide-react';
 
-const Footer = () => {
-  const [email, setEmail] = useState('');
-  const [isEmailFocused, setIsEmailFocused] = useState(false);
-  const [isHoveredSection, setIsHoveredSection] = useState(null);
+// Define types for our data structures
+interface Feature {
+  icon: LucideIcon;
+  title: string;
+  description: string;
+}
 
-  const features = [
+interface SocialIcon {
+  icon: LucideIcon;
+  href: string;
+  label: string;
+}
+
+interface QuickLink {
+  label: string;
+  href: string;
+}
+
+const Footer: React.FC = () => {
+  const [email, setEmail] = useState<string>('');
+  const [isEmailFocused, setIsEmailFocused] = useState<boolean>(false);
+  const [isHoveredSection, setIsHoveredSection] = useState<string | null>(null);
+
+  const features: Feature[] = [
     { icon: Clock, title: '24/7 Support', description: 'Round the clock assistance' },
     { icon: Shield, title: 'Secure Shopping', description: 'Protected transactions' },
     { icon: Heart, title: 'Loyalty Rewards', description: 'Earn points on purchases' },
     { icon: Star, title: 'Quality Promise', description: 'Satisfaction guaranteed' }
   ];
+
+  const socialIcons: SocialIcon[] = [
+    { icon: Facebook, href: '#', label: 'Facebook' },
+    { icon: Twitter, href: '#', label: 'Twitter' },
+    { icon: Instagram, href: '#', label: 'Instagram' },
+    { icon: Youtube, href: '#', label: 'Youtube' }
+  ];
+
+  const quickLinks: QuickLink[] = [
+    { label: 'About Us', href: '#' },
+    { label: 'Our Products', href: '#' },
+    { label: 'Special Offers', href: '#' },
+    { label: 'Customer Reviews', href: '#' },
+    { label: 'Contact Us', href: '#' }
+  ];
+
+  const customerServiceLinks: QuickLink[] = [
+    { label: 'Shipping Policy', href: '#' },
+    { label: 'Returns & Exchanges', href: '#' },
+    { label: 'FAQ', href: '#' },
+    { label: 'Track Order', href: '#' },
+    { label: 'Privacy Policy', href: '#' }
+  ];
+
+  const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
+    setEmail(e.target.value);
+  };
+
+  const handleEmailSubmit = (e: React.FormEvent): void => {
+    e.preventDefault();
+    // Add newsletter subscription logic here
+    console.log('Email submitted:', email);
+  };
 
   return (
     <footer className="relative bg-gradient-to-b from-gray-900/95 to-gray-900/98 text-gray-200 backdrop-blur-md">
@@ -31,7 +84,7 @@ const Footer = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             {features.map(({ icon: Icon, title, description }, index) => (
               <div
-                key={index}
+                key={`feature-${index}`}
                 className="group flex items-center gap-4 p-4 rounded-xl transition-all duration-300 hover:bg-white/5 backdrop-blur-lg transform hover:-translate-y-1"
               >
                 <div className="p-3 rounded-lg bg-blue-500/10 group-hover:bg-blue-500/20 transition-colors">
@@ -86,10 +139,10 @@ const Footer = () => {
           >
             <h4 className="text-lg font-semibold text-white">Quick Links</h4>
             <ul className="space-y-2">
-              {['About Us', 'Our Products', 'Special Offers', 'Customer Reviews', 'Contact Us'].map((item) => (
-                <li key={item} className="group flex items-center gap-2">
+              {quickLinks.map(({ label, href }) => (
+                <li key={label} className="group flex items-center gap-2">
                   <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1 text-blue-400" />
-                  <a href="#" className="hover:text-blue-400 transition-colors">{item}</a>
+                  <a href={href} className="hover:text-blue-400 transition-colors">{label}</a>
                 </li>
               ))}
             </ul>
@@ -103,10 +156,10 @@ const Footer = () => {
           >
             <h4 className="text-lg font-semibold text-white">Customer Service</h4>
             <ul className="space-y-2">
-              {['Shipping Policy', 'Returns & Exchanges', 'FAQ', 'Track Order', 'Privacy Policy'].map((item) => (
-                <li key={item} className="group flex items-center gap-2">
+              {customerServiceLinks.map(({ label, href }) => (
+                <li key={label} className="group flex items-center gap-2">
                   <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1 text-blue-400" />
-                  <a href="#" className="hover:text-blue-400 transition-colors">{item}</a>
+                  <a href={href} className="hover:text-blue-400 transition-colors">{label}</a>
                 </li>
               ))}
             </ul>
@@ -120,29 +173,38 @@ const Footer = () => {
           >
             <h4 className="text-lg font-semibold text-white">Stay Connected</h4>
             <p className="text-gray-400">Subscribe to our newsletter for updates and exclusive offers.</p>
-            <div className="flex flex-col gap-2">
+            <form onSubmit={handleEmailSubmit} className="flex flex-col gap-2">
               <div className="relative">
                 <input
                   type="email"
                   value={email}
-                  onChange={(e) => setEmail(e.target.value)}
+                  onChange={handleEmailChange}
                   onFocus={() => setIsEmailFocused(true)}
                   onBlur={() => setIsEmailFocused(false)}
                   placeholder="Enter your email"
                   className="w-full px-4 py-2 rounded-lg bg-white/5 border border-gray-700 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all backdrop-blur-lg"
                 />
-                <div className={`absolute inset-0 rounded-lg bg-blue-500/5 transition-opacity duration-300 pointer-events-none ${isEmailFocused ? 'opacity-100' : 'opacity-0'}`} />
+                <div
+                  className={`absolute inset-0 rounded-lg bg-blue-500/5 transition-opacity duration-300 pointer-events-none ${
+                    isEmailFocused ? 'opacity-100' : 'opacity-0'
+                  }`}
+                />
               </div>
-              <button className="px-4 py-2 bg-gradient-to-r from-blue-600 to-blue-700 text-white rounded-lg hover:from-blue-700 hover:to-blue-800 transition-all duration-300 transform hover:-translate-y-0.5 hover:shadow-lg hover:shadow-blue-500/20">
+              <button
+                type="submit"
+                className="px-4 py-2 bg-gradient-to-r from-blue-600 to-blue-700 text-white rounded-lg hover:from-blue-700 hover:to-blue-800 transition-all duration-300 transform hover:-translate-y-0.5 hover:shadow-lg hover:shadow-blue-500/20"
+              >
                 Subscribe
               </button>
-            </div>
+            </form>
+
             {/* Social Media */}
             <div className="flex gap-4 mt-4">
-              {[Facebook, Twitter, Instagram, Youtube].map((Icon, index) => (
+              {socialIcons.map(({ icon: Icon, href, label }) => (
                 <a
-                  key={index}
-                  href="#"
+                  key={label}
+                  href={href}
+                  aria-label={label}
                   className="p-2 rounded-lg hover:bg-white/5 transition-colors group"
                 >
                   <Icon className="h-6 w-6 text-gray-400 group-hover:text-blue-400 transition-colors" />
