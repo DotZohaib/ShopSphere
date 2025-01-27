@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client"
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
@@ -54,7 +56,7 @@ const Cart: React.FC = () => {
        if (cartData && cartData.items) {
          console.log("Cart data:", cartData);
          setCartDocumentId(cartData._id);
-         setCartItems(cartData.items.filter((item) => item.product));
+         setCartItems(cartData.items.filter((item: any) => item.product));
        } else {
          // Create a new cart if none exists
          const newCart = await client.create({
