@@ -220,8 +220,9 @@ const Sidebar = () => {
         </AnimatePresence>
       </aside>
       {/* Slider Section */}
-      <main className="w-full md:w-3/4 flex items-center justify-center bg-white relative">
+        <main className="w-full md:w-3/4 flex items-center justify-center bg-white relative">
         <div className="w-full z-20 h-[60vh] md:h-[70vh] relative overflow-hidden">
+          {/* Slides */}
           {slides.map((slide, index) => (
             <div
               key={slide.id}
@@ -232,16 +233,18 @@ const Sidebar = () => {
                 transform: `translateX(${100 * (index - currentSlide)}%)`,
               }}
             >
+              {/* Full Image Display with Right-Side Focus */}
               <Image
                 src={slide.image}
                 alt={slide.title}
-                width={1500}
-                height={1400}
-                style={{ objectFit: "cover", objectPosition: "center" }}
-                className="md:object-center"
+                layout="fill"
+                objectFit="cover"
+                objectPosition="90% center"
+                className="md:object-center" // Adjust object position for mobile
               />
 
-              <div className="absolute inset-x-0 bottom-4 md:bottom-1/4 flex flex-col justify-center items-center md:items-start text-center md:text-left px-4 md:px-16 bg-gradient-to-r to-transparent">
+              {/* Text Overlay */}
+              <div className="absolute inset-x-0 bottom-4 md:bottom-1/4 flex flex-col justify-center items-center md:items-start text-center md:text-left px-4 md:px-16 bg-gradient-to-r  to-transparent">
                 <h2 className="text-pink-600 font-bold text-sm md:text-lg uppercase tracking-widest mb-2 animate-fadeIn">
                   {slide.Brand}
                 </h2>
