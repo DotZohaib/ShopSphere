@@ -362,16 +362,20 @@ const Product = () => {
                     </div>
                   </div>
                 )}
-                <div className="flex space-x-4">
-                  <button className="flex-1 bg-blue-500 text-white py-3 rounded-md hover:bg-blue-600 transition-colors flex items-center justify-center">
-                    <ShoppingCart size={20} className="mr-2" />
-                    <Link href="/Cart">Add to Cart</Link>
-                  </button>
-                  <button className="flex-1 bg-red-500 text-white py-3 rounded-md hover:bg-red-600 transition-colors flex items-center justify-center">
-                    <Heart size={20} className="mr-2" />{" "}
-                    <Link href="/Wishlist">Add to Wishlist</Link>
-                  </button>
-                </div>
+               <div className="flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-4">
+  {/* Add to Cart Button */}
+  <button className="flex-1 bg-blue-500 text-white py-3 rounded-md hover:bg-blue-600 transition-colors flex items-center justify-center">
+    <ShoppingCart size={20} className="mr-2" />
+    <Link href="/Cart">Add to Cart</Link>
+  </button>
+  
+  {/* Add to Wishlist Button */}
+  <button className="flex-1 bg-red-500 text-white py-3 rounded-md hover:bg-red-600 transition-colors flex items-center justify-center">
+    <Heart size={20} className="mr-2" />
+    <Link href="/Wishlist">Add to Wishlist</Link>
+  </button>
+</div>
+
               </div>
             </div>
           </motion.div>
